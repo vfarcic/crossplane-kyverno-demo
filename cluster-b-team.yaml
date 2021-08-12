@@ -1,0 +1,14 @@
+apiVersion: demo.upbound.io/v1alpha1
+kind: ClusterClaim
+metadata:
+  name: b-team
+  namespace: b-team
+spec:
+  id: b-team
+  compositionSelector:
+    matchLabels:
+      provider: aws
+      cluster: eks
+  parameters:
+    nodeSize: small
+    version: "1.19"
