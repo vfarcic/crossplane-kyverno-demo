@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-large-nodes
+  annotations:
+    policies.kyverno.io/title: Disallow Large Nodes
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Cluster
+    policies.kyverno.io/description: >-
+      Disallow large nodes  
+spec:
+  validationFailureAction: enforce
+  rules:
+  - name: check-node-size
+    match:
+      resources:
+        kinds:
+        - ClusterClaim
+    preconditions:
+    - key: "{{request.object.metadata.namespace}}"
+      operator: Equals
+      value: b-team
+    validate:
+      message: "You belong to the b-team and we decided that you cannot create clusters with large nodes. If you would like large nodes, move to the a-team. They earned our trust, your team did not."
+      pattern:
+        spec:
+          parameters:
+            nodeSize: "!large"

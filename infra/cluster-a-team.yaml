@@ -7,7 +7,7 @@ spec:
   id: a-team
   compositionSelector:
     matchLabels:
-      provider: google
-      cluster: gke
+      provider: aws
+      cluster: eks
   parameters:
-    nodeSize: small
+    nodeSize: large
